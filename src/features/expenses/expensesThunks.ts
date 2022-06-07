@@ -47,7 +47,7 @@ export const addExpense =
   };
 
 export const updateExpense =
-  ({ id, data }: { id: string; data: ExpenseUpdate }): AppThunk =>
+  ({ id, ...data }: ExpenseUpdate): AppThunk =>
   (dispatch, getState) => {
     const { token } = selectAuth(getState());
     if (token) {

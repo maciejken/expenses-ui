@@ -2,15 +2,24 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import { BasicAuth } from "../authAPI";
+import { FC } from "react";
+import { Status } from "@common/enums";
 
-export default function SignIn() {
+interface SignInProps {
+  status: Status;
+  onSignIn: (auth: BasicAuth) => void;
+}
+
+const SignIn: FC<SignInProps> = ({ status, onSignIn }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const username = data.get("username") as string;
+    const password = data.get("password") as string;
+    if (username && password) {
+      onSignIn({ username, password });
+    }
   };
 
   return (
@@ -28,10 +37,10 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
             variant="standard"
           />
@@ -58,4 +67,6 @@ export default function SignIn() {
       </Box>
     </Container>
   );
-}
+};
+
+export default SignIn;

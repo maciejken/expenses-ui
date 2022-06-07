@@ -11,7 +11,9 @@ export interface ExpenseData extends NewExpenseData {
   id: string;
 }
 
-export type ExpenseUpdate = Partial<NewExpenseData>;
+export interface ExpenseUpdate extends Partial<NewExpenseData> {
+  id: string;
+}
 
 export enum ExpensesMode {
   Default = "default",
@@ -21,7 +23,7 @@ export enum ExpensesMode {
 }
 
 export interface ExpensesState {
-  expenses: ExpenseData[];
+  expenses: ExpenseData[] | null;
   status: Status;
   mode: ExpensesMode;
 }
@@ -41,7 +43,7 @@ export interface AddExpensePayload extends Authorized {
 
 export interface UpdateExpensePayload extends Authorized {
   id: string;
-  data: ExpenseUpdate;
+  data: Partial<NewExpenseData>;
 }
 
 export interface DeleteExpensePayload extends Authorized {
